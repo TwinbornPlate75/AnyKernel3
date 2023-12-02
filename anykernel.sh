@@ -1,33 +1,32 @@
-# AnyKernel3 Ramdisk Mod Script
-# osm0sis @ xda-developers
+### AnyKernel3 Ramdisk Mod Script
+## osm0sis @ xda-developers
 
-## AnyKernel setup
-# begin properties
+### AnyKernel setup
+# global properties
 properties() { '
-kernel.string=TPKernel by TwinbornPlate75
+kernel.string=TPKernel by TwinbornPlate75 @ CoolApk
+do.devicecheck=1
 do.modules=0
 do.systemless=0
 do.cleanup=1
 do.cleanuponabort=0
 device.name1=raphael
-supported.patchlevels=
+supported.versions=13-14
 '; } # end properties
 
-# shell variables
+### AnyKernel install
+# boot shell variables
 block=auto;
-is_slot_device=auto;
+is_slot_device=0;
 ramdisk_compression=auto;
 
-
-## AnyKernel methods (DO NOT CHANGE)
-# import patching functions/variables - see for reference
+# import functions/variables and setup patching - see for reference (DO NOT REMOVE)
 . tools/ak3-core.sh;
 
-
-## AnyKernel install
-split_boot;
+# boot install
+split_boot; # use split_boot to skip ramdisk unpack, e.g. for devices with init_boot ramdisk
 
 mv $home/rd-new.cpio $home/ramdisk-new.cpio
 
-flash_boot;
-## end install
+flash_boot; # use flash_boot to skip ramdisk repack, e.g. for devices with init_boot ramdisk
+## end boot install
