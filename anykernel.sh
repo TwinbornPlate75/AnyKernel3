@@ -11,6 +11,7 @@ do.systemless=0
 do.cleanup=1
 do.cleanuponabort=0
 device.name1=raphael
+device.name2=cepheus
 supported.versions=13-14
 '; } # end properties
 
