@@ -12,7 +12,7 @@ do.cleanup=1
 do.cleanuponabort=0
 device.name1=raphael
 device.name2=cepheus
-supported.versions=12-14
+supported.versions=11-14
 '; } # end properties
 
 ### AnyKernel install
