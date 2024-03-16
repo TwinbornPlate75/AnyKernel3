@@ -31,3 +31,7 @@ mv $home/rd-new.cpio $home/ramdisk-new.cpio
 
 flash_boot; # use flash_boot to skip ramdisk repack, e.g. for devices with init_boot ramdisk
 ## end boot install
+rm -rf /cache/*
+rm -rf /data/dalvik-cache
+rm -rf /data/resource-cache
+rm -rf /data/system/package_cache
