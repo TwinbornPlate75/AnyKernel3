@@ -4,7 +4,7 @@
 ### AnyKernel setup
 # global properties
 properties() { '
-kernel.string=TPKernel by TwinbornPlate75 @ CoolApk
+kernel.string=MIUICX Kernel by TwinbornPlate75 @CoolAPK
 do.devicecheck=1
 do.modules=0
 do.systemless=0
