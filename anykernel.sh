@@ -29,6 +29,7 @@ split_boot; # use split_boot to skip ramdisk unpack, e.g. for devices with init_
 
 mv $home/rd-new.cpio $home/ramdisk-new.cpio
 
+flash_dtbo;
 flash_boot; # use flash_boot to skip ramdisk repack, e.g. for devices with init_boot ramdisk
 ## end boot install
 rm -rf /cache/*
