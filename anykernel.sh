@@ -29,6 +29,8 @@ if [ $? -eq 0 ]; then
     fdtput -t s $AKHOME/dtb /firmware/android/boot_devices "soc/1d84000.ufshc";
     fdtput -d $AKHOME/dtb /firmware/android/shared_meta;
     fdtput -d $AKHOME/dtb /firmware/android/android_q_fstab;
+
+    DSP=true;
 else
     # patch dtb if using erofs on /vendor
     fs_type=$($AKHOME/tools/busybox mount | grep ' /vendor ' | awk '{print $5}');
@@ -41,6 +43,9 @@ fi;
 
 # boot install
 split_boot;
+if [ "$DSP" = "true" ]; then
+    patch_cmdline "using_dynamic_partitions" "using_dynamic_partitions";
+fi;
 flash_boot;
 flash_dtbo;
 ## end boot install
