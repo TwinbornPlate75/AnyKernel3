@@ -23,7 +23,7 @@ NO_BLOCK_DISPLAY=1;
 . tools/ak3-core.sh;
 
 # patch dtb if using retrofit dynamic partitions
-grep -q "first_stage_mount" /vendor/etc/fstab.qcom
+grep -q "logical" /vendor/etc/fstab.qcom
 if [ $? -eq 0 ]; then
     ui_print " " "Retrofit dynamic partitions detected. Patching dtb...";
     fdtput -t s $AKHOME/dtb /firmware/android/boot_devices "soc/1d84000.ufshc";
