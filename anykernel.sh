@@ -4,19 +4,18 @@
 ### AnyKernel setup
 # global properties
 properties() { '
-kernel.string=MIUICX Kernel by TwinbornPlate75 @ CoolAPK
+kernel.string=Starfish Kernel by TwinbornPlate75 @ CoolAPK
 do.devicecheck=1
 do.cleanup=1
-device.name1=raphael
-device.name2=raphaelin
-device.name3=cepheus
+device.name1=alpha
+device.name2=alphaplus
 supported.versions=11-15
 '; } # end properties
 
 ### AnyKernel install
 # boot shell variables
 BLOCK=/dev/block/bootdevice/by-name/boot;
-IS_SLOT_DEVICE=0;
+IS_SLOT_DEVICE=auto;
 NO_BLOCK_DISPLAY=1;
 
 # import functions/variables and setup patching - see for reference (DO NOT REMOVE)
