@@ -18,6 +18,7 @@ supported.versions=11-15
 BLOCK=/dev/block/bootdevice/by-name/boot;
 IS_SLOT_DEVICE=0;
 NO_BLOCK_DISPLAY=1;
+RAMDISK_COMPRESSION=auto;
 
 # import functions/variables and setup patching - see for reference (DO NOT REMOVE)
 . tools/ak3-core.sh;
