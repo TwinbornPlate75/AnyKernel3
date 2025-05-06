@@ -32,6 +32,9 @@ RAMDISK_COMPRESSION=auto;
 # import functions/variables and setup patching - see for reference (DO NOT REMOVE)
 . tools/ak3-core.sh;
 
+# boot install
+dump_boot;
+
 # init.rc
 backup_file init.rc;
 replace_string init.rc "cpuctl cpu,timer_slack" "mount cgroup none /dev/cpuctl cpu" "mount cgroup none /dev/cpuctl cpu,timer_slack";
@@ -48,9 +51,7 @@ patch_fstab fstab.tuna /cache ext4 options "barrier=1" "barrier=0,nomblk_io_subm
 patch_fstab fstab.tuna /data ext4 options "data=ordered" "nomblk_io_submit,data=writeback";
 append_file fstab.tuna "usbdisk" fstab;
 
-# boot install
-split_boot;
-flash_boot;
+write_boot;
 flash_dtbo;
 ## end boot install
 
