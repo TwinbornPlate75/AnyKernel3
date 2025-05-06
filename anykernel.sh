@@ -22,8 +22,8 @@ NO_BLOCK_DISPLAY=1;
 . tools/ak3-core.sh;
 
 # boot install
-split_boot;
-flash_boot;
+dump_boot;
+write_boot;
 ## end boot install
 
 # cache clean
