@@ -23,6 +23,9 @@ RAMDISK_COMPRESSION=auto;
 # import functions/variables and setup patching - see for reference (DO NOT REMOVE)
 . tools/ak3-core.sh;
 
+# boot install
+dump_boot;
+
 # patch dtb if using retrofit dynamic partitions
 grep -q "logical" /vendor/etc/fstab.qcom
 if [ $? -eq 0 ]; then
@@ -42,12 +45,10 @@ else
     fi;
 fi;
 
-# boot install
-split_boot;
 if [ "$DSP" = "true" ]; then
     patch_cmdline "using_dynamic_partitions" "using_dynamic_partitions";
 fi;
-flash_boot;
+write_boot;
 flash_dtbo;
 ## end boot install
 
