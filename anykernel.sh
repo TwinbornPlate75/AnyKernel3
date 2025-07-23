@@ -48,7 +48,6 @@ if [ "$DSP" = "true" ]; then
     patch_cmdline "using_dynamic_partitions" "using_dynamic_partitions";
 fi;
 flash_boot;
-flash_dtbo;
 ## end boot install
 
 # cache clean
