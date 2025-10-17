@@ -10,7 +10,7 @@ do.cleanup=1
 device.name1=raphael
 device.name2=raphaelin
 device.name3=cepheus
-supported.versions=11-15
+supported.versions=11-16
 '; } # end properties
 
 ### AnyKernel install
