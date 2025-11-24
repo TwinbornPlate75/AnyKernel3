@@ -19,7 +19,7 @@ device.name9=OnePlus7TPro
 device.name10=hotdog
 device.name11=OnePlus7TProNR
 device.name12=hotdogg
-supported.versions=11-15
+supported.versions=11-16
 '; } # end properties
 
 ### AnyKernel install
