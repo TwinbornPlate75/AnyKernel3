@@ -9,7 +9,7 @@ do.devicecheck=0
 do.cleanup=1
 device.name1=
 device.name2=
-supported.versions=11-15
+supported.versions=11-16
 '; } # end properties
 
 ### AnyKernel install
