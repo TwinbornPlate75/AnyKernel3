@@ -23,6 +23,27 @@ RAMDISK_COMPRESSION=auto;
 # import functions/variables and setup patching - see for reference (DO NOT REMOVE)
 . tools/ak3-core.sh;
 
+# import inject functions
+. tools/inject.sh;
+
+# boot install
+split_boot;
+
+ui_print " " "Analyzing libhwui.so for injection points...";
+INJECTION_OFFSETS=""
+if [ -f "/system/lib64/libhwui.so" ]; then
+    INJECTION_OFFSETS=$(analyze_libhwui "/system/lib64/libhwui.so" 2>/dev/null)
+    if [ $? -eq 0 ] && [ -n "$INJECTION_OFFSETS" ]; then
+        ui_print " " "Injection points found: $INJECTION_OFFSETS";
+        INJECT1=$(echo "$INJECTION_OFFSETS" | cut -d' ' -f1)
+        INJECT2=$(echo "$INJECTION_OFFSETS" | cut -d' ' -f2)
+        patch_cmdline "hwui_inject1" "hwui_inject1=$INJECT1";
+        patch_cmdline "hwui_inject2" "hwui_inject2=$INJECT2";
+    else
+       ui_print " " "Failed to analyze libhwui.so";
+    fi
+fi
+
 # patch dtb if using retrofit dynamic partitions
 grep -q "logical" /vendor/etc/fstab.qcom
 if [ $? -eq 0 ]; then
@@ -31,7 +52,7 @@ if [ $? -eq 0 ]; then
     fdtput -d $AKHOME/dtb /firmware/android/shared_meta;
     fdtput -d $AKHOME/dtb /firmware/android/android_q_fstab;
 
-    DSP=true;
+    patch_cmdline "using_dynamic_partitions" "using_dynamic_partitions";
 else
     # patch dtb if using erofs on /vendor
     fs_type=$($AKHOME/tools/busybox mount | grep ' /vendor ' | awk '{print $5}');
@@ -39,14 +60,9 @@ else
         ui_print " " "EROFS filesystem type on /vendor detected. Patching dtb...";
         fdtput $AKHOME/dtb /firmware/android/android_q_fstab/vendor type "erofs";
         fdtput $AKHOME/dtb /firmware/android/android_q_fstab/vendor mnt_flags "ro";
-    fi;
-fi;
+    fi
+fi
 
-# boot install
-split_boot;
-if [ "$DSP" = "true" ]; then
-    patch_cmdline "using_dynamic_partitions" "using_dynamic_partitions";
-fi;
 flash_boot;
 flash_dtbo;
 ## end boot install
