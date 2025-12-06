@@ -72,7 +72,7 @@ analyze_function() {
         return 1
     fi
     
-    X4_ASSIGN_LINE=$(echo "$DISASM_OUTPUT" | grep "add.*x4.*x2" | head -1)
+    X4_ASSIGN_LINE=$(echo "$DISASM_OUTPUT" | grep -E "mov.*x4,|add.*x4,|ldr.*x4," | head -1)
     
     if [ -z "$X4_ASSIGN_LINE" ]; then
         return 1
@@ -82,7 +82,7 @@ analyze_function() {
     X4_ASSIGN_REL_OFFSET_DEC=$(printf "%d" "0x$X4_ASSIGN_REL_ADDR")
     INJECT1_OFFSET=$((FUNC_FILE_OFFSET + X4_ASSIGN_REL_OFFSET_DEC + 4))
     
-    BLR_LINE=$(echo "$DISASM_OUTPUT" | grep "blr.*x8" | head -1)
+    BLR_LINE=$(echo "$DISASM_OUTPUT" | grep -E "blr" | head -1)
     
     if [ -z "$BLR_LINE" ]; then
         return 1
