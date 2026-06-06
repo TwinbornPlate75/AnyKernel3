@@ -43,6 +43,16 @@ if [ -f "/system/lib64/libhwui.so" ]; then
     fi;
 fi;
 
+# patch super_resolution based on Android version
+ANDROID_VERSION=$(file_getprop /system/build.prop ro.build.version.release);
+ANDROID_MAJOR=${ANDROID_VERSION%%.*};
+if [ "$ANDROID_MAJOR" -ge 16 ] 2>/dev/null; then
+    ui_print " " "Enable super-resolution enhancement";
+    patch_cmdline "super_resolution" "super_resolution=10";
+else
+    patch_cmdline "super_resolution" "super_resolution=1";
+fi;
+
 # patch dtb if using retrofit dynamic partitions
 grep -q "logical" /vendor/etc/fstab.qcom;
 if [ $? -eq 0 ]; then
