@@ -29,17 +29,15 @@ RAMDISK_COMPRESSION=auto;
 # boot install
 split_boot;
 
-ui_print " " "Analyzing libhwui.so for injection points...";
-if [ -f "/system/lib64/libhwui.so" ]; then
-    INJECTION_OFFSETS=$(analyze_libhwui "/system/lib64/libhwui.so" 2>/dev/null)
-    if [ $? -eq 0 ] && [ -n "$INJECTION_OFFSETS" ]; then
-        ui_print " " "Injection points found: $INJECTION_OFFSETS";
-        INJECT1=$(echo "$INJECTION_OFFSETS" | cut -d' ' -f1);
-        INJECT2=$(echo "$INJECTION_OFFSETS" | cut -d' ' -f2);
-        patch_cmdline "hwui_inject1" "hwui_inject1=$INJECT1";
-        patch_cmdline "hwui_inject2" "hwui_inject2=$INJECT2";
+ui_print " " "Analyzing libgui.so for Surface::queueBuffer...";
+if [ -f "/system/lib64/libgui.so" ]; then
+    QUEUEBUF_OFFSET=$(analyze_libgui "/system/lib64/libgui.so" 2>/dev/null)
+    if [ $? -eq 0 ] && [ -n "$QUEUEBUF_OFFSET" ]; then
+        ui_print " " "queueBuffer offset: $QUEUEBUF_OFFSET";
+        patch_cmdline "queuebuf_addr" "queuebuf_addr=$QUEUEBUF_OFFSET";
     else
-       ui_print " " "Failed to analyze libhwui.so";
+        ui_print " " "Failed to analyze libgui.so, disabling queuebuf_mon";
+        patch_cmdline "queuebuf_addr" "queuebuf_addr=0";
     fi;
 fi;
 
