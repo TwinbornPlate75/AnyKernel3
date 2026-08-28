@@ -20,9 +20,6 @@ analyze_file_info() {
     return 0
 }
 
-# Resolve the file offset of a single named symbol (its entry point) from the
-# ELF symbol table via readelf. Surface::queueBuffer only needs the function
-# entry, so no disassembly is required.
 find_queuebuf_symbol() {
     local file="$1"
     local mangled="$2"
@@ -40,11 +37,6 @@ find_queuebuf_symbol() {
     return 0
 }
 
-# Surface::queueBuffer has two manglings across Android versions:
-#   old: ...queueBuffer(ANativeWindowBuffer*, int)
-#   new: ...queueBuffer(ANativeWindowBuffer*, int, SurfaceQueueBufferOutput*)
-# Only one exists per lib, so try the old signature first then the new one and
-# emit the single offset that resolves. The kernel receives one offset.
 analyze_libgui() {
     if [ $# -ne 1 ]; then
         return 1
@@ -63,6 +55,8 @@ analyze_libgui() {
         "_ZN7android7Surface11queueBufferEP19ANativeWindowBufferi" || \
     find_queuebuf_symbol "$file" \
         "_ZN7android7Surface11queueBufferEP19ANativeWindowBufferiPNS_24SurfaceQueueBufferOutputE" || \
+    find_queuebuf_symbol "$file" \
+        "_ZN7android7Surface16hook_queueBufferEP13ANativeWindowP19ANativeWindowBufferi" || \
         return 1
 
     printf "0x%x\n" "$QUEUEBUF_OFFSET"
