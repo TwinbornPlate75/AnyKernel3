@@ -29,6 +29,9 @@ RAMDISK_COMPRESSION=auto;
 # boot install
 split_boot;
 
+# reserve pages for LZ4 decompression; 32 is friendlier to low-memory devices
+patch_cmdline "erofs.reserved_pages" "erofs.reserved_pages=32";
+
 ui_print " " "Analyzing libgui.so for Surface::queueBuffer...";
 if [ -f "/system/lib64/libgui.so" ]; then
     QUEUEBUF_OFFSET=$(analyze_libgui "/system/lib64/libgui.so" 2>/dev/null)
