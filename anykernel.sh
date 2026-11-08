@@ -68,6 +68,9 @@ flash_boot;
 flash_dtbo;
 ## end boot install
 
+# disable xiaomi smartcache
+setprop persist.sys.stability.SmartCacheEnable false
+
 # cache clean
 rm -rf /cache/*;
 rm -rf /data/dalvik-cache;
